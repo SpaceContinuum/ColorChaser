@@ -3,3 +3,4 @@ ColorChaser/Library
 ColorChaser/Logs
 ColorChaser/Packages
 ColorChaser/ProjectSettings
+*.csproj
