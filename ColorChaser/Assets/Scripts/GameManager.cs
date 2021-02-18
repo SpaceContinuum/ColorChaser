@@ -15,4 +15,13 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    bool msgAddPlatform(GameObject platform) {
+        //do other stuff
+        return true;
+    }
+    bool msgRemovePlatform(GameObject platform) {
+        //do other stuff
+        return true;
+    }
 }

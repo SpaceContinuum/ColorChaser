@@ -15,12 +15,9 @@ public class Platform : MonoBehaviour
     public float jumpMultiplyer;
     public int Id;
 
-    Renderer m_Renderer;
-
-
     void Awake()
     {
-        m_Renderer = GetComponent<Renderer>();
+        StartCoroutine(Destroy());
     }
     // Start is called before the first frame update
     void Start()
@@ -31,7 +28,7 @@ public class Platform : MonoBehaviour
     public void SetUp()
     {
         transform.position = pos;
-        transform.localScale += new Vector3(Length-1, 0,0);
+        transform.localScale += new Vector3(Length-1, 0, 0);
     }
 
     // Update is called once per frame
@@ -39,20 +36,18 @@ public class Platform : MonoBehaviour
     {
 
     }
-    void OnBecameInvisible()
-    {
-        //שיעלים את הפלטפורמה GameManager לשלוח הודעה ל
-        //לשלוח את הפלטפורמה עצמה
-    }
 
     void JumpEffect()
     {
 
     }
 
-    void Destroy()
+    IEnumerator Destroy()
     {
-
+        //waitForSeconds(6 * spawn interval);
+        yield return new WaitForSeconds(6);
+        //send massage to the game manager
+        Destroy(gameObject);
     }
     void TurnBlack()
     {

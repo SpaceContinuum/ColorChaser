@@ -15,47 +15,50 @@ public class SpawnerScript : MonoBehaviour
     public float spawnChanceGreen;
     public int PlatformCounter;
     public GameObject Platform;
+    private Vector3 lastPlatformPos = new Vector3(0, 0, 0);
+    private float LastPlatformLength = 0;
 
-    private Vector3 lastPlatformPos;
-    private float LastPlatformLength;
+    private Coroutine myCoroutine;
 
-    private string[] colors = new string[3] {"red", "green", "black"};
+    //temp
+    private string[] colors = new string[3] { "red", "green", "black" };
 
     //public GameObject[] createdPlatform;
     private List<GameObject> createdPlatform;
     void Awake()
     {
-        for (int i = 0; i < 10; i++)
-        {
+        //for (int i = 0; i < 6; i++)
+        //{
             //var curPlatform = Instantiate(Platform, new Vector3(0,0,0), Quaternion.identity);
             //var curPlatform = new GameObject("platform").AddComponent<Platform>();
-           
-            
-            var curPlatform = Instantiate(Platform, new Vector3(0,0,0), Quaternion.identity);
-            Platform myPlat = curPlatform.GetComponent<Platform>();
-            myPlat.Length = Random.Range(MinPlatformL, MaxPlatformL);
-            int colorIndex = Random.Range(0,3);
-            myPlat.Color = colors[colorIndex];
+            //startSpawning();
 
-            Vector3 newPos;
-            if(i!=0) {
-                float xDistance = Random.Range(MinXDistance, MaxXDistance);
-                float yDistance = Random.Range(MinYDistance, MaxYDistance);
-                float x = lastPlatformPos.x + LastPlatformLength + xDistance;
-                float y = lastPlatformPos.y + yDistance;
-                newPos = new Vector3(x,y,0);
-                myPlat.pos = newPos;
-            }
-            else {
-                lastPlatformPos = new Vector3(0,0,0);
-                myPlat.pos = lastPlatformPos;
-                LastPlatformLength = myPlat.Length;
-            }
-            myPlat.SetUp();
+            // var curPlatform = Instantiate(Platform, new Vector3(0, 0, 0), Quaternion.identity);
+            // Platform myPlat = curPlatform.GetComponent<Platform>();
+            // myPlat.Length = Random.Range(MinPlatformL, MaxPlatformL);
+            // int colorIndex = Random.Range(0, 3);
+            // myPlat.Color = colors[colorIndex];
 
-            lastPlatformPos = myPlat.pos;
-            LastPlatformLength = myPlat.Length;
-        }
+            // if (i != 0)
+            // {
+            //     float xDistance = Random.Range(MinXDistance, MaxXDistance);
+            //     float yDistance = Random.Range(MinYDistance, MaxYDistance);
+            //     float x = lastPlatformPos.x + LastPlatformLength + xDistance;
+            //     float y = lastPlatformPos.y + yDistance;
+            //     Vector3 newPos = new Vector3(x, y, 0);
+            //     myPlat.pos = newPos;
+            // }
+            // else
+            // {
+            //     lastPlatformPos = new Vector3(0, 0, 0);
+            //     myPlat.pos = lastPlatformPos;
+            //     LastPlatformLength = myPlat.Length;
+            // }
+            // myPlat.SetUp();
+
+            // lastPlatformPos = myPlat.pos;
+            // LastPlatformLength = myPlat.Length;
+        //}
 
     }
 
@@ -68,12 +71,40 @@ public class SpawnerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(myCoroutine == null)
+        {
+            myCoroutine = StartCoroutine(spawn());
+        }
+        
+    }
 
+    IEnumerator spawn() {
+        startSpawning();
+
+        //send massage to game manager
+        yield return new WaitForSeconds(1);
+        myCoroutine = null;
     }
 
     void startSpawning()
     {
+        var curPlatform = Instantiate(Platform, new Vector3(0, 0, 0), Quaternion.identity);
+        Platform myPlat = curPlatform.GetComponent<Platform>();
+        myPlat.Length = Random.Range(MinPlatformL, MaxPlatformL);
+        int colorIndex = Random.Range(0, 3);
+        myPlat.Color = colors[colorIndex];
 
+        float xDistance = Random.Range(MinXDistance, MaxXDistance);
+        float yDistance = Random.Range(MinYDistance, MaxYDistance);
+        float x = lastPlatformPos.x + LastPlatformLength + xDistance;
+        float y = lastPlatformPos.y + yDistance;
+        Vector3 newPos = new Vector3(x, y, 0);
+        myPlat.pos = newPos;
+
+        myPlat.SetUp();
+
+        lastPlatformPos = myPlat.pos;
+        LastPlatformLength = myPlat.Length;
     }
 
     void StopSpawning()
