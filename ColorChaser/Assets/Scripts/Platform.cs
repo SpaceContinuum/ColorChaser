@@ -55,4 +55,8 @@ public class Platform : MonoBehaviour
     {
 
     }
+
+    public void someFunc() {
+        Debug.Log("Platform");
+    }
 }
