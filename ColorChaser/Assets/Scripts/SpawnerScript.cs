@@ -72,8 +72,6 @@ public class SpawnerScript : MonoBehaviour
         var curPlatform = Instantiate(Platform, new Vector3(0, 0, 0), Quaternion.identity);
         Platform myPlat = curPlatform.GetComponent<Platform>();
         myPlat.Length = Random.Range(MinPlatformL, MaxPlatformL);
-        //int colorIndex = Random.Range(0, 3);
-        //myPlat.Color = colors[colorIndex];
 
         myPlat.Color = GetMats();
 
@@ -104,21 +102,15 @@ public class SpawnerScript : MonoBehaviour
         }
         //smallest chance number
         if(rnd <= spawnChanceBlack) {
-            Debug.Log("black");
             curMat = Mats["black"];
         }
         //highest chance number
         else if(rnd > spawnChanceGreen) {
-            Debug.Log("green");
             curMat = Mats["green"];
         }
         else {
-            Debug.Log("red");
             curMat = Mats["red"];
         }
-
-        Debug.Log(curMat);
-        Debug.Log(rnd);
 
         return curMat;
     }
