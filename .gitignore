@@ -5,3 +5,4 @@ ColorChaser/Packages
 ColorChaser/ProjectSettings
 ColorChaser/obj
 *.csproj
+*.cache

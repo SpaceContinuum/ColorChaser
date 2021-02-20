@@ -58,7 +58,6 @@ public class CharController : MonoBehaviour
         }
 
         /*Debug purposes*/
-        if (transform.position.y <= -1)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
@@ -74,7 +73,6 @@ public class CharController : MonoBehaviour
         {
 
             // Move the character by finding the target velocity
-            Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
             // And then smoothing it out and applying it to the character
             m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
@@ -106,10 +104,6 @@ public class CharController : MonoBehaviour
         // Switch the way the player is labelled as facing.
         m_FacingRight = !m_FacingRight;
 
-        // Multiply the player's x local scale by -1.
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
     }
 
 }
