@@ -9,7 +9,7 @@ public class Platform : MonoBehaviour
     // public float YCoord;
     // public float XCoord;
     public Vector3 pos;
-    public string Color;
+    public Material Color;
     public bool ColorToggle;
     public float timer;
     public float jumpMultiplyer;
@@ -29,6 +29,8 @@ public class Platform : MonoBehaviour
     {
         transform.position = pos;
         transform.localScale += new Vector3(Length-1, 0, 0);
+        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer.material = Color;
     }
 
     // Update is called once per frame

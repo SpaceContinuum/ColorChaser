@@ -20,7 +20,7 @@ public class cameraScript : MonoBehaviour
             return;
         }
 
-        _offset = new Vector3(0,0,1);
+        _offset = new Vector3(-2.5f,0,1);
     }
 
     // Update is called once per frame
