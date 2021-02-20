@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class CharController : MonoBehaviour
 {
@@ -55,6 +56,12 @@ public class CharController : MonoBehaviour
                     OnLandEvent.Invoke();
             }
         }
+
+        /*Debug purposes*/
+        if (transform.position.y <= -1)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
 
@@ -104,4 +111,5 @@ public class CharController : MonoBehaviour
         theScale.x *= -1;
         transform.localScale = theScale;
     }
+
 }
