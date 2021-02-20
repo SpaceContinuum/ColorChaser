@@ -8,6 +8,7 @@ public class CharController : MonoBehaviour
 {
 
     [SerializeField] private float m_JumpForce = 400f;                          // Amount of force added when the player jumps.
+    [SerializeField] private float m_v0 = 5f;                                   // Initial speed
     [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
     [SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
     [SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
@@ -58,6 +59,7 @@ public class CharController : MonoBehaviour
         }
 
         /*Debug purposes*/
+        if (transform.position.y <= -4)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
@@ -73,6 +75,7 @@ public class CharController : MonoBehaviour
         {
 
             // Move the character by finding the target velocity
+            Vector3 targetVelocity = new Vector2(move * 10f+ m_v0, m_Rigidbody2D.velocity.y);
             // And then smoothing it out and applying it to the character
             m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
@@ -104,6 +107,7 @@ public class CharController : MonoBehaviour
         // Switch the way the player is labelled as facing.
         m_FacingRight = !m_FacingRight;
 
+        transform.Rotate(0f, 180f, 0f);
     }
 
 }
