@@ -63,10 +63,13 @@ public class Platform : MonoBehaviour
         }
         
     }
-    void TurnBlack()
+    public void TurnColor(bool isColor)
     {
+        //if isColor true (colorize)
+        //if isColor false (turn black)
 
     }
+
 
     public void someFunc() {
         Debug.Log("Platform");

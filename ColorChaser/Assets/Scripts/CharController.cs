@@ -15,6 +15,7 @@ public class CharController : MonoBehaviour
     [SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
     [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
+    [SerializeField] private GameObject gameManager;                                     // Be able to call game manager
 
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
@@ -22,6 +23,8 @@ public class CharController : MonoBehaviour
     private Rigidbody2D m_Rigidbody2D;
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
     private Vector3 m_Velocity = Vector3.zero;
+    private float m_addJForce;
+    private GameManager GM;
 
     [Header("Events")]
     [Space]
@@ -35,6 +38,7 @@ public class CharController : MonoBehaviour
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        GM = gameManager.GetComponent<GameManager>();
 
         if (OnLandEvent == null)
             OnLandEvent = new UnityEvent();
@@ -70,10 +74,10 @@ public class CharController : MonoBehaviour
 
     public void Move(float move, bool jump)
     {
+        m_addJForce=(m_Grounded? GM.getJumpMult():0);
 
-
-        //only control the player if grounded or airControl is turned on
-        if (m_Grounded || m_AirControl)
+            //only control the player if grounded or airControl is turned on
+            if (m_Grounded || m_AirControl)
         {
 
             // Move the character by finding the target velocity
@@ -99,7 +103,7 @@ public class CharController : MonoBehaviour
         {
             // Add a vertical force to the player.
             m_Grounded = false;
-            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+            m_Rigidbody2D.AddForce(new Vector2(0f, m_addJForce + m_JumpForce));
         }
     }
 
@@ -116,4 +120,5 @@ public class CharController : MonoBehaviour
     {
         m_v0 += m_acceleration;
     }
+
 }

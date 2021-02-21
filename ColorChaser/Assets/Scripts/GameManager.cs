@@ -7,6 +7,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     private List<Platform> platforms;
+
+    private float jumpMult=2f;
+    private bool isColor=true;
+    [SerializeField] private float blackOutTime=3f;
+
     private void Awake() {
 
         //כדי שנוכל לפנות אל ה
@@ -29,6 +34,46 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public float getJumpMult()
+    {
+        return jumpMult;
+    }
+
+    public bool msgPlatformHit(float jmpMlt)
+    {
+        if (jmpMlt != 0)
+        {
+            jumpMult = jmpMlt;
+            return true;
+        }
+        return false;
+    }
+
+    public bool msgBlackPlatformHit()
+    {
+        if (platforms.Count > 0 && isColor)
+        {
+            TurnPlatforms();
+            Invoke("TurnPlatforms", blackOutTime);
+            return true;
+        }
+        return false;
+    }
+
+    public bool TurnPlatforms()
+    {
+        if (platforms.Count > 0)
+        {
+            foreach (Platform pltfrm in platforms)
+            {
+                pltfrm.TurnColor(isColor);
+            }
+            isColor = !isColor;
+            return true;
+        }
+            return false;
+    }
+
     public bool msgAddPlatform(GameObject pltfrm) {
         Platform platform = pltfrm.GetComponent<Platform>();
 
@@ -39,6 +84,7 @@ public class GameManager : MonoBehaviour
         }
         return false;
     }
+
     public bool msgRemovePlatform(int id)
     {
         for (int i = 0; i<= platforms.Count; i++)
@@ -54,11 +100,14 @@ public class GameManager : MonoBehaviour
 
     private bool PlatformExists(int id)
     {
-        foreach (Platform pltfrm in platforms)
+        if (platforms.Count > 0)
         {
-            if(pltfrm.getID() == id)
+            foreach (Platform pltfrm in platforms)
             {
-                return true;
+                if (pltfrm.getID() == id)
+                {
+                    return true;
+                }
             }
         }
         return false;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnerScript : MonoBehaviour
 {
     public static SpawnerScript Instance { get; private set; }
+    enum Colors { Red, Green, Black};
 
     [SerializeField] private float MinXDistance;
     [SerializeField] private float MaxXDistance;
@@ -23,10 +24,7 @@ public class SpawnerScript : MonoBehaviour
 
     private Coroutine myCoroutine;
 
-    private Dictionary<string,Material> Mats = new Dictionary<string, Material>();
-
-    //temp
-    //private string[] colors = new string[3] { "red", "green", "black" };
+    private Dictionary<Colors,Material> Mats = new Dictionary<Colors, Material>();
 
     //public GameObject[] createdPlatform;
     private List<GameObject> createdPlatform;
@@ -37,9 +35,9 @@ public class SpawnerScript : MonoBehaviour
 
         Instance = this;
         
-        Mats.Add("red", Resources.Load("RedPlatform") as Material);
-        Mats.Add("green", Resources.Load("GreenPlatform") as Material);
-        Mats.Add("black", Resources.Load("BlackPlatform") as Material);
+        Mats.Add(Colors.Red,   Resources.Load("RedPlatform")   as Material);
+        Mats.Add(Colors.Green, Resources.Load("GreenPlatform") as Material);
+        Mats.Add(Colors.Black, Resources.Load("BlackPlatform") as Material);
     }
 
     // Start is called before the first frame update
@@ -109,14 +107,14 @@ public class SpawnerScript : MonoBehaviour
         }
         //smallest chance number
         if(rnd <= spawnChanceBlack) {
-            curMat = Mats["black"];
+            curMat = Mats[Colors.Black];
         }
         //highest chance number
         else if(rnd > spawnChanceGreen) {
-            curMat = Mats["green"];
+            curMat = Mats[Colors.Green];
         }
         else {
-            curMat = Mats["red"];
+            curMat = Mats[Colors.Red];
         }
 
         return curMat;
