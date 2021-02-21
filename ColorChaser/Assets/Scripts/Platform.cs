@@ -13,7 +13,7 @@ public class Platform : MonoBehaviour
     public bool ColorToggle;
     public float timer;
     public float jumpMultiplyer;
-    public int Id;
+    private int Id;
 
     void Awake()
     {
@@ -37,6 +37,11 @@ public class Platform : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public int getID()
+    {
+        return Id;
     }
 
     void JumpEffect()

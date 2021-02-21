@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-
+    private List<Platform> platforms;
     private void Awake() {
 
         //כדי שנוכל לפנות אל ה
@@ -29,12 +29,38 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public bool msgAddPlatform(GameObject platform) {
-        //do other stuff
-        return true;
+    public bool msgAddPlatform(GameObject pltfrm) {
+        Platform platform = pltfrm.GetComponent<Platform>();
+
+        if (!PlatformExists(platform.getID()))
+        {
+            platforms.Add(platform);
+            return true;
+        }
+        return false;
     }
-    public bool msgRemovePlatform(GameObject platform) {
-        //do other stuff
-        return true;
+    public bool msgRemovePlatform(int id)
+    {
+        for (int i = 0; i<= platforms.Count; i++)
+        {
+            if(platforms[i].getID() == id)
+            {
+                platforms.RemoveAt(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool PlatformExists(int id)
+    {
+        foreach (Platform pltfrm in platforms)
+        {
+            if(pltfrm.getID() == id)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
