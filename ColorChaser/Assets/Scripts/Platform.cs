@@ -5,14 +5,15 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
 
-    public float Length;
+
+    private float Length;
     // public float YCoord;
     // public float XCoord;
-    public Vector3 pos;
-    public Material Color;
-    public bool ColorToggle;
-    public float timer;
-    public float jumpMultiplyer;
+    private Vector3 pos;
+    private Material Color;
+    private bool ColorToggle;
+    private float timer;
+    private float jumpMultiplyer;
     private int Id;
 
     void Awake()
@@ -25,12 +26,12 @@ public class Platform : MonoBehaviour
 
     }
 
-    public void SetUp()
+    public void SetUp(Vector3 newPos, float newLength, Material newColor, int newId)
     {
-        transform.position = pos;
-        transform.localScale += new Vector3(Length-1, 0, 0);
+        transform.position = newPos;
+        transform.localScale += new Vector3(newLength-1, 0, 0);
         MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
-        meshRenderer.material = Color;
+        meshRenderer.material = newColor;
     }
 
     // Update is called once per frame
@@ -53,8 +54,14 @@ public class Platform : MonoBehaviour
     {
         //waitForSeconds(6 * spawn interval);
         yield return new WaitForSeconds(6);
-        //send massage to the game manager
-        Destroy(gameObject);
+        
+        if(GameManager.Instance.msgRemovePlatform(Id)) {
+            Destroy(gameObject);
+        }
+        else {
+            Debug.Log("platform doesn't destroy");
+        }
+        
     }
     void TurnBlack()
     {
@@ -64,4 +71,6 @@ public class Platform : MonoBehaviour
     public void someFunc() {
         Debug.Log("Platform");
     }
+
+
 }

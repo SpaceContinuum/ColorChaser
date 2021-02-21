@@ -6,17 +6,17 @@ public class SpawnerScript : MonoBehaviour
 {
     public static SpawnerScript Instance { get; private set; }
 
-    public float MinXDistance;
-    public float MaxXDistance;
-    public float MinYDistance;
-    public float MaxYDistance;
-    public float MinPlatformL;
-    public float MaxPlatformL;
-    public float spawnChanceRed;
-    public float spawnChanceBlack;
-    public float spawnChanceGreen;
-    public int PlatformCounter;
-    public GameObject Platform;
+    [SerializeField] private float MinXDistance;
+    [SerializeField] private float MaxXDistance;
+    [SerializeField] private float MinYDistance;
+    [SerializeField] private float MaxYDistance;
+    [SerializeField] private float MinPlatformL;
+    [SerializeField] private float MaxPlatformL;
+    [SerializeField] private float spawnChanceRed;
+    [SerializeField] private float spawnChanceBlack;
+    [SerializeField] private float spawnChanceGreen;
+    [SerializeField] private GameObject Platform;
+    private int PlatformCounter = 0;
 
     private Vector3 lastPlatformPos = new Vector3(0, 0, 0);
     private float LastPlatformLength = 0;
@@ -60,8 +60,9 @@ public class SpawnerScript : MonoBehaviour
 
     IEnumerator spawn() {
         
+        
         startSpawning();
-
+        
         //send massage to game manager
         yield return new WaitForSeconds(1);
         myCoroutine = null;
@@ -69,23 +70,29 @@ public class SpawnerScript : MonoBehaviour
 
     void startSpawning()
     {
+
         var curPlatform = Instantiate(Platform, new Vector3(0, 0, 0), Quaternion.identity);
         Platform myPlat = curPlatform.GetComponent<Platform>();
-        myPlat.Length = Random.Range(MinPlatformL, MaxPlatformL);
+        float Length = Random.Range(MinPlatformL, MaxPlatformL);
 
-        myPlat.Color = GetMats();
+        Material Color = GetMats();
 
         float xDistance = Random.Range(MinXDistance, MaxXDistance);
         float yDistance = Random.Range(MinYDistance, MaxYDistance);
         float x = lastPlatformPos.x + LastPlatformLength + xDistance;
         float y = lastPlatformPos.y + yDistance;
-        Vector3 newPos = new Vector3(x, y, 0);
-        myPlat.pos = newPos;
+        Vector3 pos = new Vector3(x, y, 0);
+        // myPlat.pos = newPos;
 
-        myPlat.SetUp();
+        myPlat.SetUp(pos, Length, Color, PlatformCounter);
 
-        lastPlatformPos = myPlat.pos;
-        LastPlatformLength = myPlat.Length;
+        lastPlatformPos = pos;
+        LastPlatformLength = Length;
+        PlatformCounter++;
+
+        if(!GameManager.Instance.msgAddPlatform(curPlatform)) {
+            Debug.Log("platform doesn't create");
+        }
     }
 
     void StopSpawning()
