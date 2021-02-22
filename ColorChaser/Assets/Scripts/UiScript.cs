@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class UiScript : MonoBehaviour
 {
-    
-    public InputField playerNameField;
+    private Text textComponent;
 
+    void Awake() {
+        textComponent = GetComponent<Text>();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -17,11 +19,7 @@ public class UiScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    public void savePlayerName() {
-        
-       // SceneManagerScript.Instance.StartGame();
+        SceneManagerScript.Instance.curGameScore = Mathf.Floor(Time.timeSinceLevelLoad);
+        textComponent.text = Mathf.Floor(Time.timeSinceLevelLoad).ToString();
     }
 }

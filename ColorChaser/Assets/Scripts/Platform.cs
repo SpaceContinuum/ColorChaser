@@ -6,19 +6,22 @@ public class Platform : MonoBehaviour
 {
 
 
-    private float Length;
+    private float PlatformLength;
     // public float YCoord;
     // public float XCoord;
     private Vector3 pos;
-    private Material Color;
+    private Material PlatformColor;
     private bool ColorToggle;
     private float timer;
     private float jumpMultiplyer;
     private int Id;
 
+    private Color OriginalColor;
+    private MeshRenderer meshRenderer;
+
     void Awake()
     {
-        
+        meshRenderer = GetComponent<MeshRenderer>();
     }
     // Start is called before the first frame update
     void Start()
@@ -28,11 +31,17 @@ public class Platform : MonoBehaviour
 
     public void SetUp(Vector3 newPos, float newLength, Material newColor, int newId)
     {
+        pos = newPos;
         transform.position = newPos;
+        PlatformLength = newLength;
         transform.localScale += new Vector3(newLength-1, 0, 0);
-        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+        PlatformColor = newColor;
+        
         meshRenderer.material = newColor;
         Id = newId;
+
+        OriginalColor = meshRenderer.material.color;
+        
     }
 
     // Update is called once per frame
@@ -46,8 +55,9 @@ public class Platform : MonoBehaviour
         return Id;
     }
 
-    //add on collition
-    //send MsgPlatfomHit(JumpMult)
+    private void OnCollisionEnter2D(Collision2D other) {
+        GameManager.Instance.msgPlatformHit(jumpMultiplyer);
+    }
 
     void JumpEffect()
     {
@@ -57,8 +67,8 @@ public class Platform : MonoBehaviour
     IEnumerator DestroyPlatform()
     {
         //waitForSeconds(6 * spawn interval);
-        yield return new WaitForSeconds(3);
-        
+        yield return new WaitForSeconds(6);
+
         if(GameManager.Instance.msgRemovePlatform(Id)) {
             Destroy(gameObject);
         }
@@ -69,15 +79,15 @@ public class Platform : MonoBehaviour
     }
     public void TurnColor(bool isColor)
     {
+        if(!isColor) {
+            meshRenderer.material.SetColor("_Color", Color.black);
+        }
+        else {
+            meshRenderer.material.SetColor("_Color", OriginalColor);
+        }
         //change the current color to or from black
         //if isColor true (colorize)
         //if isColor false (turn black)
     }
-
-
-    public void someFunc() {
-        Debug.Log("Platform");
-    }
-
 
 }

@@ -57,22 +57,20 @@ public class SpawnerScript : MonoBehaviour
     }
 
     IEnumerator spawn() {
-        //startSpawning();
 
         var curPlatform = Instantiate(Platform, new Vector3(0, 0, 0), Quaternion.identity);
         Platform myPlat = curPlatform.GetComponent<Platform>();
         float Length = Random.Range(MinPlatformL, MaxPlatformL);
 
-        Material Color = GetMats();
+        Material curColor = GetMats();
 
         float xDistance = Random.Range(MinXDistance, MaxXDistance);
         float yDistance = Random.Range(MinYDistance, MaxYDistance);
         float x = lastPlatformPos.x + LastPlatformLength + xDistance;
         float y = lastPlatformPos.y + yDistance;
         Vector3 pos = new Vector3(x, y, 0);
-        // myPlat.pos = newPos;
 
-        myPlat.SetUp(pos, Length, Color, PlatformCounter);
+        myPlat.SetUp(pos, Length, curColor, PlatformCounter);
 
         lastPlatformPos = pos;
         LastPlatformLength = Length;
@@ -82,39 +80,9 @@ public class SpawnerScript : MonoBehaviour
             Debug.Log("platform doesn't create");
         }
         
-        //send massage to game manager
         yield return new WaitForSeconds(1);
         myCoroutine = null;
     }
-
-    // void startSpawning()
-    // {
-    //     var curPlatform = Instantiate(Platform, new Vector3(0, 0, 0), Quaternion.identity);
-    //     Platform myPlat = curPlatform.GetComponent<Platform>();
-    //     float Length = Random.Range(MinPlatformL, MaxPlatformL);
-
-    //     Material Color = GetMats();
-
-    //     float xDistance = Random.Range(MinXDistance, MaxXDistance);
-    //     float yDistance = Random.Range(MinYDistance, MaxYDistance);
-    //     float x = lastPlatformPos.x + LastPlatformLength + xDistance;
-    //     float y = lastPlatformPos.y + yDistance;
-    //     Vector3 pos = new Vector3(x, y, 0);
-    //     // myPlat.pos = newPos;
-
-        
-    //     myPlat.SetUp(pos, Length, Color, PlatformCounter);
-
-    //     lastPlatformPos = pos;
-    //     LastPlatformLength = Length;
-    //     PlatformCounter++;
-
-    //     // if(!GameManager.Instance.msgAddPlatform(curPlatform)) {
-    //     //     Debug.Log("platform doesn't create");
-    //     // }
-
-        
-    // }
 
     void StopSpawning()
     {
@@ -123,12 +91,8 @@ public class SpawnerScript : MonoBehaviour
 
     private Material GetMats() {
         Material curMat;
-        float rnd = Random.value;
+        float rnd = Random.Range(0.01f,1.01f);
 
-        //change
-        while(rnd == 0) {
-            rnd = Random.value;
-        }
         //smallest chance number
         if(rnd <= spawnChanceBlack) {
             curMat = Mats[Colors.Black];

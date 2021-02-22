@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class ScoreBase
 {
-    public int Score;
+    public float Score;
     public string Name;
     public System.DateTime Time;
 }
