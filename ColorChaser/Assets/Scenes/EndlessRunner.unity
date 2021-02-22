@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e6e1ae507ad39498631b164a5a7bbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 400
+  m_JumpForce: 900
   m_v0: 5
   m_acceleration: 0.5
   m_MovementSmoothing: 0.05
@@ -502,6 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80de9007a693c2042a3a31ea6bc7c764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blackOutTime: 3
 --- !u!1 &1133015281
 GameObject:
   m_ObjectHideFlags: 0
