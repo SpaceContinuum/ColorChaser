@@ -57,17 +57,7 @@ public class SpawnerScript : MonoBehaviour
     }
 
     IEnumerator spawn() {
-        
-        
-        startSpawning();
-        
-        //send massage to game manager
-        yield return new WaitForSeconds(1);
-        myCoroutine = null;
-    }
-
-    void startSpawning()
-    {
+        //startSpawning();
 
         var curPlatform = Instantiate(Platform, new Vector3(0, 0, 0), Quaternion.identity);
         Platform myPlat = curPlatform.GetComponent<Platform>();
@@ -91,7 +81,40 @@ public class SpawnerScript : MonoBehaviour
         if(!GameManager.Instance.msgAddPlatform(curPlatform)) {
             Debug.Log("platform doesn't create");
         }
+        
+        //send massage to game manager
+        yield return new WaitForSeconds(1);
+        myCoroutine = null;
     }
+
+    // void startSpawning()
+    // {
+    //     var curPlatform = Instantiate(Platform, new Vector3(0, 0, 0), Quaternion.identity);
+    //     Platform myPlat = curPlatform.GetComponent<Platform>();
+    //     float Length = Random.Range(MinPlatformL, MaxPlatformL);
+
+    //     Material Color = GetMats();
+
+    //     float xDistance = Random.Range(MinXDistance, MaxXDistance);
+    //     float yDistance = Random.Range(MinYDistance, MaxYDistance);
+    //     float x = lastPlatformPos.x + LastPlatformLength + xDistance;
+    //     float y = lastPlatformPos.y + yDistance;
+    //     Vector3 pos = new Vector3(x, y, 0);
+    //     // myPlat.pos = newPos;
+
+        
+    //     myPlat.SetUp(pos, Length, Color, PlatformCounter);
+
+    //     lastPlatformPos = pos;
+    //     LastPlatformLength = Length;
+    //     PlatformCounter++;
+
+    //     // if(!GameManager.Instance.msgAddPlatform(curPlatform)) {
+    //     //     Debug.Log("platform doesn't create");
+    //     // }
+
+        
+    // }
 
     void StopSpawning()
     {
@@ -102,6 +125,7 @@ public class SpawnerScript : MonoBehaviour
         Material curMat;
         float rnd = Random.value;
 
+        //change
         while(rnd == 0) {
             rnd = Random.value;
         }

@@ -18,12 +18,12 @@ public class Platform : MonoBehaviour
 
     void Awake()
     {
-        StartCoroutine(Destroy());
+        
     }
     // Start is called before the first frame update
     void Start()
     {
-
+        StartCoroutine(DestroyPlatform());
     }
 
     public void SetUp(Vector3 newPos, float newLength, Material newColor, int newId)
@@ -32,6 +32,7 @@ public class Platform : MonoBehaviour
         transform.localScale += new Vector3(newLength-1, 0, 0);
         MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.material = newColor;
+        Id = newId;
     }
 
     // Update is called once per frame
@@ -45,15 +46,18 @@ public class Platform : MonoBehaviour
         return Id;
     }
 
+    //add on collition
+    //send MsgPlatfomHit(JumpMult)
+
     void JumpEffect()
     {
 
     }
 
-    IEnumerator Destroy()
+    IEnumerator DestroyPlatform()
     {
         //waitForSeconds(6 * spawn interval);
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(3);
         
         if(GameManager.Instance.msgRemovePlatform(Id)) {
             Destroy(gameObject);
@@ -65,9 +69,9 @@ public class Platform : MonoBehaviour
     }
     public void TurnColor(bool isColor)
     {
+        //change the current color to or from black
         //if isColor true (colorize)
         //if isColor false (turn black)
-
     }
 
 

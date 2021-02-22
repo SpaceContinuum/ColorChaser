@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    private List<Platform> platforms;
+    private List<Platform> platforms = new List<Platform>();
 
     private float jumpMult=2f;
     private bool isColor=true;
@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
     }
 
     public bool msgAddPlatform(GameObject pltfrm) {
+        
         Platform platform = pltfrm.GetComponent<Platform>();
 
         if (!PlatformExists(platform.getID()))
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i<= platforms.Count; i++)
         {
+
             if(platforms[i].getID() == id)
             {
                 platforms.RemoveAt(i);

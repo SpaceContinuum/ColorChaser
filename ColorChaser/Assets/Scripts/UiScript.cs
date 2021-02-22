@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UiScript : MonoBehaviour
 {
+    
     public InputField playerNameField;
 
     // Start is called before the first frame update
