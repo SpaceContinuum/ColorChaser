@@ -11,9 +11,12 @@ public class GameManager : MonoBehaviour
 
     private float jumpMult;
     private bool isColor=true;
+    private float minPlatformHeight=0f;
+
     [SerializeField] private float blackOutTime=3f;
     [SerializeField] private float GreenJumpForce = 300f;
     [SerializeField] private float RedJumpForce = 300f;
+    [SerializeField] private GameObject player;
 
     private void Awake()
     {
@@ -33,7 +36,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (player.transform.position.y <= 1.2*minPlatformHeight)
+        {
+            msgGameOver();
+        }
     }
 
     public float getJumpMult()
@@ -94,6 +100,15 @@ public class GameManager : MonoBehaviour
         if (!PlatformExists(platform.getID()))
         {
             platforms.Add(platform);
+            if (minPlatformHeight > pltfrm.transform.position.y)
+            {
+                minPlatformHeight = pltfrm.transform.position.y;
+            }
+
+            if(!isColor)
+            {
+                platform.TurnColor(isColor);
+            }
             return true;
         }
         return false;
@@ -103,8 +118,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i<= platforms.Count; i++)
         {
-
-            if(platforms[i].getID() == id)
+            if (platforms[i].getID() == id)
             {
                 platforms.RemoveAt(i);
                 return true;
