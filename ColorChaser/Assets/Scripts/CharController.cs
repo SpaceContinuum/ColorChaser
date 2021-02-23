@@ -15,7 +15,7 @@ public class CharController : MonoBehaviour
     [SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
     [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
-    [SerializeField] private GameObject gameManager;                                     // Be able to call game manager
+    [SerializeField] private GameObject gameManager;                            // Be able to call game manager
 
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
@@ -87,13 +87,11 @@ public class CharController : MonoBehaviour
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !m_FacingRight)
             {
-                // ... flip the player.
                 Flip();
             }
             // Otherwise if the input is moving the player left and the player is facing right...
             else if (move < 0 && m_FacingRight)
             {
-                // ... flip the player.
                 Flip();
             }
         }

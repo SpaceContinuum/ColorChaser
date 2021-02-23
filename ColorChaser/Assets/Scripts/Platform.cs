@@ -7,8 +7,6 @@ public class Platform : MonoBehaviour
 
 
     private float PlatformLength;
-    // public float YCoord;
-    // public float XCoord;
     private Vector3 pos;
     private Material PlatformColor;
     private bool ColorToggle;
