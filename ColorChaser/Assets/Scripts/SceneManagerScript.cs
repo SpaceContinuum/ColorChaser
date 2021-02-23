@@ -11,14 +11,18 @@ public class SceneManagerScript : MonoBehaviour
     public static SceneManagerScript Instance { get; private set; }
 
     public float curGameScore;
-
     private ScoreBase score;
     private List<ScoreBase> TopScores = new List<ScoreBase>();
     private int TopScoresCount = 3;
 
+    //for Debug only
+    public string playerName;
+    public string topScoresJsonTemp = "";
+
     void Awake() {
         if (Instance != null)
-            throw new System.Exception("More than one singleton exists in the scene!");
+            Destroy(this);
+            //throw new System.Exception("More than one singleton exists in the scene!");
 
         Instance = this;
     }
@@ -39,11 +43,12 @@ public class SceneManagerScript : MonoBehaviour
         Application.Quit();
     }
 
-    public void StartGame(InputField playerNameField) {
-        //Debug.Log(playerNameField.text);
-        //ScoreManager.Instance.score.Name = playerNameField.text;
+    public void LoadGame() {
+        //active before publish
+        //string playerName = PlayerPrefs.GetString("playerName");
+
         score = new ScoreBase();
-        score.Name = playerNameField.text;
+        score.Name = playerName;
         DontDestroyOnLoad(gameObject);
         SceneManager.LoadScene("EndlessRunner");
     }
@@ -58,7 +63,7 @@ public class SceneManagerScript : MonoBehaviour
     }
 
     void UpdateTopScores() {
-        
+        Debug.Log(TopScores.Count);
         if(TopScores.Count < TopScoresCount){
             TopScores.Add(score);
         }
@@ -71,11 +76,16 @@ public class SceneManagerScript : MonoBehaviour
 
         string topScoresJson = JsonUtility.ToJson(TopScores);
         PlayerPrefs.SetString("TopScores", topScoresJson);
+
+        //for Debug only
+        topScoresJsonTemp = topScoresJson;
+
+        SceneManager.LoadScene("GameOver");
         
     }
 
     public void GameOver() {
+        Debug.Log("gameOver");
         setPlayerScore(curGameScore);
-        SceneManager.LoadScene("GameOver");
     }
 }
