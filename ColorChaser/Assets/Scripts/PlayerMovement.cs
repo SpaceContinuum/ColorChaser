@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //public Animator animator;
+    public Animator animator;
     public CharController controller;
     public float runSpeed = 40f;
 
@@ -20,18 +20,18 @@ public class PlayerMovement : MonoBehaviour
 
         if (horizontalMove == 0)
         {
-            //animator.SetBool("isMove", true);
+            animator.SetBool("isMove", true);
         }
         else
         {
-            //animator.SetBool("isMove", false);
+            animator.SetBool("isMove", false);
         }
 
         if (Input.GetButtonDown("Jump"))
         {
             jump = true;
             // Need to test jumps with animations
-            //animator.SetBool("isJump", true);
+            animator.SetBool("isJump", true);
         }
 
     }
@@ -41,6 +41,6 @@ public class PlayerMovement : MonoBehaviour
         // Move our character
         controller.Move(horizontalMove * Time.fixedDeltaTime, jump);
         jump = false;
-        //animator.SetBool("isJump", false);
+        animator.SetBool("isJump", false);
     }
 }
