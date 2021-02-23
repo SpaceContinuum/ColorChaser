@@ -74,7 +74,7 @@ public class CharController : MonoBehaviour
     public void Move(float move, bool jump)
     {
         m_addJForce=(m_Grounded? GM.getJumpMult():0);
-        Debug.Log("AddForce: " + m_addJForce);
+        
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || m_AirControl)
         {
@@ -101,6 +101,7 @@ public class CharController : MonoBehaviour
             // Add a vertical force to the player.
             m_Grounded = false;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_addJForce + m_JumpForce));
+            Debug.Log("AddForce: " + m_addJForce);
         }
     }
 

@@ -75,9 +75,11 @@ public class SpawnerScript : MonoBehaviour
         float yDistance = Random.Range(MinYDistance, MaxYDistance);
         float x = lastPlatformPos.x + LastPlatformLength + xDistance;
         float y = lastPlatformPos.y + yDistance;
+        float jump = jumpMult[colorInumerator] * jumpCoeff[colorInumerator];
         Vector3 pos = new Vector3(x, y, 0);
 
-        myPlat.SetUp(pos, Length, materialColor, PlatformCounter, jumpMult[colorInumerator] * jumpCoeff[colorInumerator]);
+        Debug.Log("Color: " + randomColor + "\n jump: " + jump);
+        myPlat.SetUp(pos, Length, materialColor, PlatformCounter, jump);
 
         lastPlatformPos = pos;
         LastPlatformLength = Length;

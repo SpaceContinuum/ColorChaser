@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     private float jumpMult;
     private bool isColor=true;
     [SerializeField] private float blackOutTime=3f;
-    [SerializeField] private float GreenJumpForce = 50f;
-    [SerializeField] private float RedJumpForce = 50f;
+    [SerializeField] private float GreenJumpForce = 300f;
+    [SerializeField] private float RedJumpForce = 300f;
 
     private void Awake()
     {
@@ -113,8 +113,7 @@ public class GameManager : MonoBehaviour
     }
     public void msgGameOver()
     {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        SceneManager.LoadScene("GameOver");
+        SceneManagerScript.Instance.GameOver();
     }
 
 

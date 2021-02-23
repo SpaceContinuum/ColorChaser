@@ -533,8 +533,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackOutTime: 3
-  GreenJumpForce: 50
-  RedJumpForce: 50
+  GreenJumpForce: 300
+  RedJumpForce: 300
 --- !u!1 &788761812
 GameObject:
   m_ObjectHideFlags: 0
