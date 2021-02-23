@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
             foreach (Platform pltfrm in platforms)
             {
                 pltfrm.TurnColor(isColor);
+                Debug.Log("turn platform black: " + pltfrm.getID());
             }
             isColor = !isColor;
             return true;

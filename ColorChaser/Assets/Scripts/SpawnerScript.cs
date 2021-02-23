@@ -78,7 +78,6 @@ public class SpawnerScript : MonoBehaviour
         float jump = jumpMult[colorInumerator] * jumpCoeff[colorInumerator];
         Vector3 pos = new Vector3(x, y, 0);
 
-        Debug.Log("Color: " + randomColor + "\n jump: " + jump);
         myPlat.SetUp(pos, Length, materialColor, PlatformCounter, jump);
 
         lastPlatformPos = pos;
