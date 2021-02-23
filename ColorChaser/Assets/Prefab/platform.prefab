@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 439842340575828807}
   - component: {fileID: 283023310366542612}
   - component: {fileID: 6221170348464474134}
-  - component: {fileID: 5940304876104766035}
   - component: {fileID: 9108912035638409036}
   - component: {fileID: -6343549102796191819}
   m_Layer: 8
@@ -82,25 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &5940304876104766035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 682643746399671735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b778304808a0d1341a154ab221b4e0fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Length: 0
-  pos: {x: 0, y: 0, z: 0}
-  Color: 
-  ColorToggle: 0
-  timer: 0
-  jumpMultiplyer: 0
-  Id: 0
 --- !u!50 &9108912035638409036
 Rigidbody2D:
   serializedVersion: 4

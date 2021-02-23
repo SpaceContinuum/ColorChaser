@@ -17,6 +17,7 @@ public class SpawnerScript : MonoBehaviour
     [SerializeField] private float spawnChanceBlack;
     [SerializeField] private float spawnChanceGreen;
     [SerializeField] private GameObject Platform;
+    
     private int PlatformCounter = 0;
 
     private Vector3 lastPlatformPos = new Vector3(0, 0, 0);
@@ -24,7 +25,9 @@ public class SpawnerScript : MonoBehaviour
 
     private Coroutine myCoroutine;
 
-    private Dictionary<Colors,Material> Mats = new Dictionary<Colors, Material>();
+    private List<Material> Mats = new List<Material>();
+    private int[] jumpCoeff = { -1, 1, 0 };
+    private float[] jumpMult = new float[3];
 
     //public GameObject[] createdPlatform;
     private List<GameObject> createdPlatform;
@@ -35,15 +38,17 @@ public class SpawnerScript : MonoBehaviour
 
         Instance = this;
         
-        Mats.Add(Colors.Red,   Resources.Load("RedPlatform")   as Material);
-        Mats.Add(Colors.Green, Resources.Load("GreenPlatform") as Material);
-        Mats.Add(Colors.Black, Resources.Load("BlackPlatform") as Material);
+        Mats.Add(Resources.Load("RedPlatform")   as Material);
+        Mats.Add(Resources.Load("GreenPlatform") as Material);
+        Mats.Add(Resources.Load("BlackPlatform") as Material);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        jumpMult[(int)Colors.Red] = GameManager.Instance.getRedJumpForce();
+        jumpMult[(int)Colors.Green] = GameManager.Instance.getGreenJumpForce();
+        jumpMult[(int)Colors.Black] = 0;
     }
 
     // Update is called once per frame
@@ -58,11 +63,13 @@ public class SpawnerScript : MonoBehaviour
 
     IEnumerator spawn() {
 
-        var curPlatform = Instantiate(Platform, new Vector3(0, 0, 0), Quaternion.identity);
-        Platform myPlat = curPlatform.GetComponent<Platform>();
-        float Length = Random.Range(MinPlatformL, MaxPlatformL);
-
-        Material curColor = GetMats();
+        Colors randomColor = RandomizeColor();
+        int colorInumerator = (int)randomColor;
+        GameObject curPlatform = Instantiate(Platform, new Vector3(0, 0, 0), Quaternion.identity);
+        
+        Platform myPlat = AddPlatformComponent(curPlatform, randomColor);
+        float Length = Random.Range(MinPlatformL, MaxPlatformL);    
+        Material materialColor = Mats[colorInumerator];
 
         float xDistance = Random.Range(MinXDistance, MaxXDistance);
         float yDistance = Random.Range(MinYDistance, MaxYDistance);
@@ -70,7 +77,7 @@ public class SpawnerScript : MonoBehaviour
         float y = lastPlatformPos.y + yDistance;
         Vector3 pos = new Vector3(x, y, 0);
 
-        myPlat.SetUp(pos, Length, curColor, PlatformCounter);
+        myPlat.SetUp(pos, Length, materialColor, PlatformCounter, jumpMult[colorInumerator] * jumpCoeff[colorInumerator]);
 
         lastPlatformPos = pos;
         LastPlatformLength = Length;
@@ -89,22 +96,33 @@ public class SpawnerScript : MonoBehaviour
 
     }
 
-    private Material GetMats() {
-        Material curMat;
-        float rnd = Random.Range(0.01f,1.01f);
+    private Platform AddPlatformComponent(GameObject curPlatform, Colors color)
+    {
+        if (color == Colors.Black)
+        {
+            curPlatform.AddComponent<BlackedPlatform>();
+            return curPlatform.GetComponent<BlackedPlatform>();
+        }
 
+        curPlatform.AddComponent<ColoredPlatform>();
+        return curPlatform.GetComponent<ColoredPlatform>();
+    }
+
+        private Colors RandomizeColor()
+    {
+        float rnd = Random.Range(0.01f, 1.01f);
         //smallest chance number
-        if(rnd <= spawnChanceBlack) {
-            curMat = Mats[Colors.Black];
+        if (rnd <= spawnChanceBlack)
+        {
+            return Colors.Black;
         }
         //highest chance number
-        else if(rnd > spawnChanceGreen) {
-            curMat = Mats[Colors.Green];
-        }
-        else {
-            curMat = Mats[Colors.Red];
+        else if (rnd > spawnChanceGreen)
+        {
+            return Colors.Green;
         }
 
-        return curMat;
+        return Colors.Red;
+        
     }
 }

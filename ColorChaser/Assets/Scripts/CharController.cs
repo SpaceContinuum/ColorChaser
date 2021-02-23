@@ -74,7 +74,7 @@ public class CharController : MonoBehaviour
     public void Move(float move, bool jump)
     {
         m_addJForce=(m_Grounded? GM.getJumpMult():0);
-
+        Debug.Log("AddForce: " + m_addJForce);
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || m_AirControl)
         {

@@ -9,15 +9,15 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     private List<Platform> platforms = new List<Platform>();
 
-    private float jumpMult=2f;
+    private float jumpMult;
     private bool isColor=true;
     [SerializeField] private float blackOutTime=3f;
+    [SerializeField] private float GreenJumpForce = 50f;
+    [SerializeField] private float RedJumpForce = 50f;
 
-    private void Awake() {
+    private void Awake()
+    {
 
-        //כדי שנוכל לפנות אל ה
-        //GameManager
-        //מהקוד של הפלטפורמה
         if (Instance != null)
             throw new Exception("More than one singleton exists in the scene!");
 
@@ -26,7 +26,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GreenJumpForce = Mathf.Abs(GreenJumpForce);
+        RedJumpForce   = Mathf.Abs(RedJumpForce);
     }
 
     // Update is called once per frame
@@ -38,6 +39,16 @@ public class GameManager : MonoBehaviour
     public float getJumpMult()
     {
         return jumpMult;
+    }
+
+    public float getGreenJumpForce()
+    {
+        return GreenJumpForce;
+    }
+
+    public float getRedJumpForce()
+    {
+        return RedJumpForce;
     }
 
     public bool msgPlatformHit(float jmpMlt)

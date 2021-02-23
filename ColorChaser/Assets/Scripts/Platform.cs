@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Platform : MonoBehaviour
+public abstract class Platform : MonoBehaviour
 {
-
-
     private float PlatformLength;
     private Vector3 pos;
     private Material PlatformColor;
@@ -27,24 +25,20 @@ public class Platform : MonoBehaviour
         StartCoroutine(DestroyPlatform());
     }
 
-    public void SetUp(Vector3 newPos, float newLength, Material newColor, int newId)
+    public void SetUp(Vector3 newPos, float newLength, Material newColor, int newId, float newJumpMult)
     {
         pos = newPos;
         transform.position = newPos;
         PlatformLength = newLength;
         transform.localScale += new Vector3(newLength-1, 0, 0);
         PlatformColor = newColor;
-        
+        jumpMultiplyer = newJumpMult;
+
         meshRenderer.material = newColor;
         Id = newId;
 
         OriginalColor = meshRenderer.material.color;
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
 
     }
 
@@ -53,14 +47,16 @@ public class Platform : MonoBehaviour
         return Id;
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
-        GameManager.Instance.msgPlatformHit(jumpMultiplyer);
-    }
-
-    void JumpEffect()
+    public float getJumpMultiplyer()
     {
-
+        return jumpMultiplyer;
     }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        JumpEffect();
+    }
+
+    public abstract void JumpEffect();
 
     IEnumerator DestroyPlatform()
     {
@@ -83,9 +79,6 @@ public class Platform : MonoBehaviour
         else {
             meshRenderer.material.SetColor("_Color", OriginalColor);
         }
-        //change the current color to or from black
-        //if isColor true (colorize)
-        //if isColor false (turn black)
     }
 
 }

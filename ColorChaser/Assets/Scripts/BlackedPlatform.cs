@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedPlatform : Platform
+public class BlackedPlatform : Platform
 {
     // Start is called before the first frame update
     void Start()
@@ -10,12 +10,8 @@ public class RedPlatform : Platform
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void JumpEffect()
     {
-        
-    }
-    private void OnCollisionEnter2D(Collision2D other) {
-        
+        GameManager.Instance.msgBlackPlatformHit();
     }
 }

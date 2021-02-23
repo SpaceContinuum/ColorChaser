@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GreenPlatform : Platform
+public class ColoredPlatform : Platform
 {
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void JumpEffect()
     {
-        
+        GameManager.Instance.msgPlatformHit(getJumpMultiplyer());
     }
 
 }
