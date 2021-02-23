@@ -536,6 +536,7 @@ MonoBehaviour:
   blackOutTime: 3
   GreenJumpForce: 300
   RedJumpForce: 300
+  player: {fileID: 356851570}
 --- !u!1 &788761812
 GameObject:
   m_ObjectHideFlags: 0

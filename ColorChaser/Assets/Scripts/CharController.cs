@@ -64,10 +64,6 @@ public class CharController : MonoBehaviour
             }
         }
 
-        if (transform.position.y <= -5)
-        {
-            GM.msgGameOver();
-        }
     }
 
 
