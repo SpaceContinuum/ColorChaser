@@ -104,6 +104,11 @@ public class GameManager : MonoBehaviour
             {
                 minPlatformHeight = pltfrm.transform.position.y;
             }
+
+            if(!isColor)
+            {
+                platform.TurnColor(isColor);
+            }
             return true;
         }
         return false;
@@ -113,8 +118,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i<= platforms.Count; i++)
         {
-
-            if(platforms[i].getID() == id)
+            if (platforms[i].getID() == id)
             {
                 platforms.RemoveAt(i);
                 return true;
