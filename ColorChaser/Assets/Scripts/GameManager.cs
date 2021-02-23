@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -99,8 +100,14 @@ public class GameManager : MonoBehaviour
         }
         return false;
     }
+    public void msgGameOver()
+    {
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("GameOver");
+    }
 
-    private bool PlatformExists(int id)
+
+        private bool PlatformExists(int id)
     {
         if (platforms.Count > 0)
         {

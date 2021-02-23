@@ -64,10 +64,9 @@ public class CharController : MonoBehaviour
             }
         }
 
-        /*Debug purposes*/
         if (transform.position.y <= -5)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            GM.msgGameOver();
         }
     }
 
