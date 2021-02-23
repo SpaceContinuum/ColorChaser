@@ -64,7 +64,7 @@ public class CharController : MonoBehaviour
                     OnLandEvent.Invoke();
             }
         }
-
+        animator.SetBool("isMove", m_Grounded);
     }
 
 
@@ -91,12 +91,12 @@ public class CharController : MonoBehaviour
             {
                 Flip();
             }
-            animator.SetBool("isMove", true);
+            
         }
         // If the player should jump...
         if (m_Grounded && jump)
         {
-            animator.SetBool("isMove", false);
+            
 
             // Add a vertical force to the player.
             m_Grounded = false;
