@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
             {
                 pltfrm.TurnColor(!isColor);
             }
-            Debug.Log("colored platform? " + isColor);
+
             isColor = !isColor;
             return true;
         }
