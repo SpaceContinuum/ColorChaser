@@ -13,14 +13,14 @@ public abstract class Platform : MonoBehaviour
     private int Id;
 
     private Color OriginalColor;
-    private MeshRenderer meshRenderer;
+    protected MeshRenderer meshRenderer;
 
-    void Awake()
+    protected void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
     }
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         StartCoroutine(DestroyPlatform());
     }
@@ -52,17 +52,16 @@ public abstract class Platform : MonoBehaviour
         return jumpMultiplyer;
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
+    protected void OnCollisionEnter2D(Collision2D other) {
         JumpEffect();
     }
 
-    public abstract void JumpEffect();
+    protected abstract void JumpEffect();
 
-    IEnumerator DestroyPlatform()
+    protected IEnumerator DestroyPlatform()
     {
         //waitForSeconds(6 * spawn interval);
         yield return new WaitForSeconds(6);
-
         if(GameManager.Instance.msgRemovePlatform(Id)) {
             Destroy(gameObject);
         }

@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class BlackedPlatform : Platform
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    public override void JumpEffect()
+
+    protected override void JumpEffect()
     {
         GameManager.Instance.msgBlackPlatformHit();
     }

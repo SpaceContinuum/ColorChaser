@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class CharController : MonoBehaviour
 {
-
+    public Animator animator;
     [SerializeField] private float m_JumpForce = 400f;                          // Amount of force added when the player jumps.
     [SerializeField] private float m_v0 = 5f;                                   // Initial speed
     [SerializeField] private float m_acceleration = 0.5f;                       // speed acceleration
@@ -16,6 +16,7 @@ public class CharController : MonoBehaviour
     [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
     [SerializeField] private GameObject gameManager;                            // Be able to call game manager
+
 
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
@@ -64,10 +65,6 @@ public class CharController : MonoBehaviour
             }
         }
 
-        if (transform.position.y <= -5)
-        {
-            GM.msgGameOver();
-        }
     }
 
 
@@ -75,8 +72,8 @@ public class CharController : MonoBehaviour
     {
         m_addJForce=(m_Grounded? GM.getJumpMult():0);
         
-            //only control the player if grounded or airControl is turned on
-            if (m_Grounded || m_AirControl)
+        //only control the player if grounded or airControl is turned on
+        if (m_Grounded || m_AirControl)
         {
 
             // Move the character by finding the target velocity
@@ -94,10 +91,13 @@ public class CharController : MonoBehaviour
             {
                 Flip();
             }
+            animator.SetBool("isMove", true);
         }
         // If the player should jump...
         if (m_Grounded && jump)
         {
+            animator.SetBool("isMove", false);
+
             // Add a vertical force to the player.
             m_Grounded = false;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_addJForce + m_JumpForce));
