@@ -57,13 +57,13 @@ public class SceneManagerScript : MonoBehaviour
         score.Score = curScore;
         score.Time = System.DateTime.Now;
 
-        Debug.Log(curScore);
+        //Debug.Log(curScore);
 
         UpdateTopScores();
     }
 
     void UpdateTopScores() {
-        Debug.Log(TopScores.Count);
+        //Debug.Log(TopScores.Count);
         if(TopScores.Count < TopScoresCount){
             TopScores.Add(score);
         }
