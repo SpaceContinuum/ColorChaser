@@ -12,40 +12,45 @@ public class SceneManagerScript : MonoBehaviour
 
     public float curGameScore;
     private ScoreBase score;
-    private List<ScoreBase> TopScores = new List<ScoreBase>();
+    [SerializeField] private List<ScoreBase> TopScores = new List<ScoreBase>();
     private int TopScoresCount = 3;
-
-    //for Debug only
     public string playerName;
-    public string topScoresJsonTemp = "";
 
-    void Awake() {
+
+    void Awake()
+    {
         if (Instance != null)
+        {
             Destroy(this);
             //throw new System.Exception("More than one singleton exists in the scene!");
+        }
+        else
+        {
+            Instance = this;
+        }
 
-        Instance = this;
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void Quit() {
-        //need to check after publish to web
+    public void Quit()
+    {
         Application.Quit();
     }
 
-    public void LoadGame() {
+    public void LoadGame()
+    {
         //active before publish
-        //string playerName = PlayerPrefs.GetString("playerName");
+        string playerName = PlayerPrefs.GetString("playerName");
 
         score = new ScoreBase();
         score.Name = playerName;
@@ -53,39 +58,40 @@ public class SceneManagerScript : MonoBehaviour
         SceneManager.LoadScene("EndlessRunner");
     }
 
-    public void setPlayerScore(float curScore) {
-        score.Score = curScore;
-        score.Time = System.DateTime.Now;
-
-        //Debug.Log(curScore);
-
-        UpdateTopScores();
-    }
-
-    void UpdateTopScores() {
-        //Debug.Log(TopScores.Count);
-        if(TopScores.Count < TopScoresCount){
+    void UpdateTopScores()
+    {
+        if (TopScores.Count < TopScoresCount)
+        {
             TopScores.Add(score);
         }
-        else{
+        else
+        {
             var LowestScore = TopScores.Min(s => s.Score);
-            if(score.Score > LowestScore) {
+            if (score.Score > LowestScore)
+            {
                 TopScores.Add(score);
+                var scoreToRemove = TopScores.First(s => s.Score == LowestScore);
+                TopScores.Remove(scoreToRemove);
             }
         }
 
-        string topScoresJson = JsonUtility.ToJson(TopScores);
-        PlayerPrefs.SetString("TopScores", topScoresJson);
+        string ScoresString = "";
+        foreach (var ts in TopScores)
+        {
+            ScoresString += JsonUtility.ToJson(ts) + ";";
+        }
 
-        //for Debug only
-        topScoresJsonTemp = topScoresJson;
+        ScoresString = ScoresString.Substring(0, ScoresString.Length - 1);
+
+        PlayerPrefs.SetString("TopScores", ScoresString);
 
         SceneManager.LoadScene("GameOver");
-        
+
     }
 
-    public void GameOver() {
-        Debug.Log("gameOver");
-        setPlayerScore(curGameScore);
+    public void GameOver()
+    {
+        score.Score = curGameScore;
+        UpdateTopScores();
     }
 }

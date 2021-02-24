@@ -17,7 +17,7 @@ public class OpeningScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(SceneManagerScript.Instance.topScoresJsonTemp);
+
     }
 
     // Update is called once per frame
@@ -46,26 +46,46 @@ public class OpeningScript : MonoBehaviour
         {
             topScoresNames[j].text = "";
             topScoresScores[j].text = "";
-            topScoresDates[j].text = "";
+            //topScoresDates[j].text = "";
         }
 
-        //for Debug only
-        string topScoresJson = SceneManagerScript.Instance.topScoresJsonTemp;
+        // //for Debug only
+        // string topScoresJson = SceneManagerScript.Instance.topScoresJsonTemp;
 
-        //string topScoresJson = PlayerPrefs.GetString("TopScores");
+        string topScoresJson = PlayerPrefs.GetString("TopScores");
 
         if (topScoresJson != "")
         {
-            List<ScoreBase> TopScores = JsonUtility.FromJson<List<ScoreBase>>(topScoresJson).OrderByDescending(s => s.Score).ToList();
+            string[] scoresArr = topScoresJson.Split(';');
+            
+            List<ScoreBase> topScores = new List<ScoreBase>(); 
 
-            int i = 0;
-            foreach (ScoreBase score in TopScores)
+            for (int i = 0; i < scoresArr.Length; i++)
             {
-                topScoresNames[i].text = score.Name;
-                topScoresScores[i].text = score.Score.ToString();
-                topScoresDates[i].text = score.Time.ToString("d");
-                i++;
+                ScoreBase curScore = JsonUtility.FromJson<ScoreBase>(scoresArr[i]);
+
+                topScores.Add(curScore);
+                // topScoresNames[i].text = curScore.Name;
+                // topScoresScores[i].text = curScore.Score.ToString();
             }
+
+            topScores = topScores.OrderByDescending(s => s.Score).ToList();
+
+            foreach (var item in topScores.Select((value, i) => new { i, value }))
+            {
+                topScoresNames[item.i].text = item.value.Name;
+                topScoresScores[item.i].text = item.value.Score.ToString();
+            }
+            //ScoreBase[] TopScores = JsonUtility.FromJson<ScoreBase[]>(topScoresJson);
+            //.OrderByDescending(s => s.Score).ToList()
+            // int i = 0;
+            // foreach (ScoreBase score in TopScores)
+            // {
+            //     topScoresNames[i].text = score.Name;
+            //     topScoresScores[i].text = score.Score.ToString();
+            //     //topScoresDates[i].text = score.Time.ToString("d");
+            //     i++;
+            // }
 
 
 
