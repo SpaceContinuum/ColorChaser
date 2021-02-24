@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class CharController : MonoBehaviour
@@ -27,13 +26,6 @@ public class CharController : MonoBehaviour
     private float m_addJForce;
     private GameManager GM;
 
-    [Header("Events")]
-    [Space]
-
-    public UnityEvent OnLandEvent;
-
-    [System.Serializable]
-    public class BoolEvent : UnityEvent<bool> { }
 
 
     private void Awake()
@@ -41,8 +33,6 @@ public class CharController : MonoBehaviour
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         GM = gameManager.GetComponent<GameManager>();
 
-        if (OnLandEvent == null)
-            OnLandEvent = new UnityEvent();
         InvokeRepeating("Accelerate", 0f, 1f);
 
     }
@@ -60,11 +50,10 @@ public class CharController : MonoBehaviour
             if (colliders[i].gameObject != gameObject)
             {
                 m_Grounded = true;
-                if (!wasGrounded)
-                    OnLandEvent.Invoke();
+
             }
         }
-
+        animator.SetBool("isMove", m_Grounded);
     }
 
 
@@ -91,17 +80,16 @@ public class CharController : MonoBehaviour
             {
                 Flip();
             }
-            animator.SetBool("isMove", true);
+            
         }
         // If the player should jump...
         if (m_Grounded && jump)
         {
-            animator.SetBool("isMove", false);
+            
 
             // Add a vertical force to the player.
             m_Grounded = false;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_addJForce + m_JumpForce));
-            Debug.Log("AddForce: " + m_addJForce);
         }
     }
 
