@@ -91,6 +91,7 @@ public class SceneManagerScript : MonoBehaviour
 
     public void GameOver()
     {
+        curGameScore =  Mathf.Floor(Time.timeSinceLevelLoad);
         score.Score = curGameScore;
         UpdateTopScores();
     }

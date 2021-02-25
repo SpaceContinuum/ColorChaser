@@ -53,6 +53,7 @@ public class OpeningScript : MonoBehaviour
         // string topScoresJson = SceneManagerScript.Instance.topScoresJsonTemp;
 
         string topScoresJson = PlayerPrefs.GetString("TopScores");
+        Debug.Log(topScoresJson);
 
         if (topScoresJson != "")
         {
@@ -65,8 +66,6 @@ public class OpeningScript : MonoBehaviour
                 ScoreBase curScore = JsonUtility.FromJson<ScoreBase>(scoresArr[i]);
 
                 topScores.Add(curScore);
-                // topScoresNames[i].text = curScore.Name;
-                // topScoresScores[i].text = curScore.Score.ToString();
             }
 
             topScores = topScores.OrderByDescending(s => s.Score).ToList();

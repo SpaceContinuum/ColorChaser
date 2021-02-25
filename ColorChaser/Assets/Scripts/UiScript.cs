@@ -19,7 +19,7 @@ public class UiScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SceneManagerScript.Instance.curGameScore = Mathf.Floor(Time.timeSinceLevelLoad);
+        //SceneManagerScript.Instance.curGameScore = Mathf.Floor(Time.timeSinceLevelLoad);
         textComponent.text = Mathf.Floor(Time.timeSinceLevelLoad).ToString();
     }
 }
